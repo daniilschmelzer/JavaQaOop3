@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: FilmManagerImplTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.095 s <<< FAILURE! - in FilmManagerImplTest
+findLastTest2  Time elapsed: 0.039 s  <<< ERROR!
+java.lang.IllegalArgumentException: Limit shouldn't be grater than capacity
+	at FilmManagerImplTest.findLastTest2(FilmManagerImplTest.java:34)
+

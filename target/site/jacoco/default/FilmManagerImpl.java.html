@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilmManagerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">javaqamvn8.1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">FilmManagerImpl.java</span></div><h1>FilmManagerImpl.java</h1><pre class="source lang-java linenums">import lombok.RequiredArgsConstructor;
+import model.Film;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class FilmManagerImpl implements FilmManager {
+
+    private final int capacity;
+    private int counter;
+    private final int limit;
+    private Film[] films;
+
+<span class="nc" id="L14">    public FilmManagerImpl() {</span>
+<span class="nc" id="L15">        this.capacity = 15;</span>
+<span class="nc" id="L16">        this.films = new Film[capacity];</span>
+<span class="nc" id="L17">        this.limit = 10;</span>
+<span class="nc" id="L18">    }</span>
+
+<span class="nc" id="L20">    public FilmManagerImpl(int capacity) {</span>
+<span class="nc" id="L21">        this.capacity = capacity;</span>
+<span class="nc" id="L22">        this.counter = 0;</span>
+<span class="nc" id="L23">        this.limit = 10;</span>
+<span class="nc" id="L24">        this.films = new Film[this.capacity];</span>
+<span class="nc" id="L25">    }</span>
+
+<span class="fc" id="L27">    public FilmManagerImpl(int capacity, int limit) {</span>
+<span class="fc" id="L28">        this.capacity = capacity;</span>
+<span class="fc" id="L29">        this.counter = 0;</span>
+<span class="fc" id="L30">        this.limit = limit;</span>
+<span class="fc" id="L31">        this.films = new Film[this.capacity];</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (limit &gt; capacity) {</span>
+<span class="nc" id="L33">            throw new IllegalArgumentException(&quot;Limit shouldn't be grater than capacity&quot;);</span>
+        }
+<span class="fc" id="L35">    }</span>
+
+    @Override
+    public void addFilm(Film film) {
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (counter &lt;= films.length - 1) {</span>
+<span class="fc" id="L40">            films[counter] = film;</span>
+        } else {
+<span class="nc" id="L42">            System.out.println(&quot;enough films&quot;);</span>
+        }
+
+<span class="fc" id="L45">        counter++;</span>
+<span class="fc" id="L46">    }</span>
+
+    @Override
+    public Film[] findAll() {
+<span class="fc" id="L50">        List&lt;Film&gt; filmsList = Arrays.asList(films);</span>
+<span class="fc" id="L51">        List&lt;Film&gt; resulList = filmsList.stream()</span>
+<span class="fc" id="L52">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L53">                .collect(Collectors.toList());</span>
+
+<span class="fc" id="L55">        return resulList.toArray(new Film[counter]);</span>
+    }
+
+    @Override
+    public Film[] findLast() {
+<span class="fc" id="L60">        List&lt;Film&gt; orderedFilms = Arrays.asList(films);</span>
+<span class="fc" id="L61">        Collections.reverse(orderedFilms);</span>
+<span class="fc" id="L62">        List&lt;Film&gt; resulList = orderedFilms.stream()</span>
+<span class="fc" id="L63">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L64">                .limit(limit)</span>
+<span class="fc" id="L65">                .collect(Collectors.toList());</span>
+
+<span class="fc" id="L67">        return resulList.toArray(new Film[limit]);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
